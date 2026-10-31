@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10110f">
+    <title>Scene — Video story studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#" aria-label="Scene home">
+          <span class="brand-mark"><span></span><span></span><span></span></span>
+          <span>scene<span class="brand-period">.</span></span>
+        </a>
+        <div class="workspace-label">WORKSPACE</div>
+        <button class="workspace-switch"><span class="workspace-avatar">S</span><span>Studio workspace</span><span class="chevron">⌄</span></button>
+        <div class="nav-label">CREATE</div>
+        <button class="nav-item active"><span class="nav-icon">▧</span> Video editor <span class="nav-count">01</span></button>
+        <button class="nav-item" id="newProjectButton"><span class="nav-icon">＋</span> New project</button>
+        <div class="sidebar-bottom">
+          <div class="tip-card"><div class="tip-spark">✳</div><strong>A story, in every voice.</strong><p>Start with narration. Add your own footage or script whenever you want.</p></div>
+          <button class="profile-button"><span class="profile-avatar">JD</span><span class="profile-name">Jordan Davis<small>Free plan</small></span><span class="profile-dots">···</span></button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="breadcrumbs"><span>My projects</span><span class="crumb-slash">/</span><strong id="projectNameLabel">Untitled story</strong><span class="saved-status" id="savedStatus" data-state="saved" role="status" aria-live="polite"><i></i> Checking saved project…</span></div>
+          <div class="top-actions"><button class="icon-button" id="helpButton" aria-label="Help">?</button><button class="avatar-small">JD</button><button class="share-button" id="projectButton">Project <span>⌄</span></button></div>
+        </header>
+
+        <div class="editor-layout">
+          <section class="work-area">
+            <div class="page-heading">
+              <div><div class="eyebrow"><span class="eyebrow-dot"></span> YOUR VIDEO WORKSPACE</div><h1>Make a story<br class="mobile-break"> from your voice-over.</h1><p class="page-subtitle">Upload narration to build timed scenes and find licensed photos. Add a script or your own clips if you like.</p></div>
+              <button class="export-button" id="exportButton"><span>↗</span> Export video</button>
+            </div>
+
+            <div class="stepper" aria-label="Editing workflow">
+              <div class="step active"><span class="step-number">01</span><span>Gather</span></div><span class="step-line"></span>
+              <div class="step active"><span class="step-number">02</span><span>Arrange</span></div><span class="step-line"></span>
+              <div class="step"><span class="step-number">03</span><span>Preview</span></div><span class="step-line"></span>
+              <div class="step"><span class="step-number">04</span><span>Export</span></div>
+            </div>
+
+            <div class="editor-grid">
+              <section class="panel footage-panel">
+                <div class="panel-heading">
+                  <div><div class="section-kicker">01 — YOUR FOOTAGE</div><h2>Video library <span id="clipCount" class="count-pill">0</span></h2></div>
+                  <button class="text-button" id="addFootageButton">＋ Add clips</button>
+                  <input id="videoInput" type="file" accept="video/*" multiple hidden>
+                </div>
+                <div class="upload-zone" id="uploadZone" tabindex="0" role="button" aria-label="Upload video clips">
+                  <div class="upload-icon"><span>↑</span></div>
+                  <div><strong>Drop your clips here</strong><p>or <button class="inline-link" id="browseClipsButton">browse files</button> from your computer</p></div>
+                  <span class="file-note">MP4, MOV, WEBM</span>
+                </div>
+                <div class="clip-list" id="clipList"><div class="empty-library"><span>▱</span><p>Your clips will show up here</p></div></div>
+              </section>
+
+              <section class="panel script-panel">
+                <div class="panel-heading">
+                  <div><div class="section-kicker">02 — THE STORY</div><h2>Your scene script</h2></div>
+                  <button class="text-button" id="scriptUploadButton">↑ Upload script</button>
+                  <input id="scriptInput" type="file" accept=".docx,.pdf,.txt,.md,.srt,.vtt,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,text/plain" hidden>
+                </div>
+                <div class="script-meta"><span class="script-status"><i></i><span id="scriptStatus">Ready for your story</span></span><span id="wordCount">0 words</span></div>
+                <textarea id="scriptInputText" placeholder="Paste your script here. Separate scenes with a blank line, or label them like “Scene 1: Arrival”.&#10;&#10;Each scene becomes a beat in your video."></textarea>
+                <div class="script-footer"><span>Supports DOCX, PDF, TXT · one paragraph per scene</span><button class="generate-button" id="generateButton"><span>✳</span> Build my scenes <span>→</span></button></div>
+              </section>
+            </div>
+
+            <section class="panel voiceover-panel">
+              <div class="panel-heading">
+                <div><div class="section-kicker">03 — NARRATION</div><h2>Voice-over</h2></div>
+                <button class="text-button" id="voiceOverUploadButton">↑ Upload audio</button>
+                <input id="voiceOverInput" type="file" multiple hidden>
+              </div>
+              <div class="voiceover-drop" id="voiceOverDrop" tabindex="0" role="button" aria-label="Upload one or more voice-over audio files">
+                <span class="voiceover-icon">♫</span>
+                <div class="voiceover-copy"><strong>Drop your narration here</strong><span>or <button class="inline-link" id="browseVoiceOverButton">browse audio files</button> · MP3, WAV, M4A, OGG</span></div>
+                <div class="voiceover-empty-status" id="voiceOverEmptyStatus">Upload multiple files · narration sets video length</div>
+              </div>
+              <div class="voiceover-tracks" id="voiceOverTracks"></div>
+              <div class="voiceover-total" id="voiceOverTotal" hidden></div>
+              <div id="voiceOverMedia" hidden></div>
+              <label class="voiceover-volume"><span>Voice-over volume</span><input type="range" id="voiceOverVolume" min="0" max="1" step="0.05" value="1"><span id="voiceOverVolumeLabel">100%</span></label>
+              <fieldset class="visual-source-options" id="visualSourceOptions">
+                <legend>Where should visuals come from?</legend>
+                <label class="visual-source-option">
+                  <input type="radio" name="visualSourceMode" value="library">
+                  <span><strong>Use my uploaded clips</strong><small>Match narration scenes with videos in your library. Add clips above first.</small></span>
+                </label>
+                <label class="visual-source-option">
+                  <input type="radio" name="visualSourceMode" value="external" checked>
+                  <span><strong>Find visuals online</strong><small>Use the voice-over to search external footage and licensed photos.</small></span>
+                </label>
+              </fieldset>
+              <p class="clip-duration-guidance">Intro clips are capped at 6 seconds; main-story clips are capped at 13 seconds each. The first scene starts as the intro, and you can change any scene in the timeline.</p>
+              <div class="visual-match">
+                <button class="generate-button" id="autoMatchButton">✳ Find visuals online</button>
+                <span id="autoMatchStatus" role="status" aria-live="polite">Choose a visual source, upload narration, then match the scenes to your clips or search online. Speech recognition runs on this device.</span>
+              </div>
+              <details class="media-provider-settings" id="mediaProviderSettings">
+                <summary>Visual sources and API keys</summary>
+                <div class="provider-key-fields">
+                  <label for="pexelsApiKey">Pexels API key <input id="pexelsApiKey" name="pexels-key-entry" type="password" autocomplete="new-password" spellcheck="false" placeholder="Optional"></label>
+                  <label for="pixabayApiKey">Pixabay API key <input id="pixabayApiKey" name="pixabay-key-entry" type="password" autocomplete="new-password" spellcheck="false" placeholder="Optional"></label>
+                </div>
+                <p>Keys stay only in this open tab and are never saved or included in project files. Requests go directly from your browser to each provider, so keys are visible to browser tools; for a public website, use a secure server proxy instead. Wikimedia Commons photos remain available without a key.</p>
+                <div class="provider-links"><a href="https://www.pexels.com/api/" target="_blank" rel="noopener noreferrer">Get a Pexels key</a><a href="https://pixabay.com/api/docs/" target="_blank" rel="noopener noreferrer">Get a Pixabay key</a></div>
+              </details>
+              <div class="provider-credit-links"><a href="https://www.pexels.com/" target="_blank" rel="noopener noreferrer">Videos from Pexels</a><a href="https://pixabay.com/videos/" target="_blank" rel="noopener noreferrer">Videos from Pixabay</a><a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Photos from Wikimedia Commons</a></div>
+            </section>
+
+            <section class="panel vanlife-panel">
+              <div class="vanlife-copy">
+                <span class="vanlife-mark">✳</span>
+                <div><strong>Vanlife edit</strong><p>16:9 landscape · 1080p · 24 fps · full-frame fit · scenic holds · quicker travel cuts · soft dissolves</p></div>
+              </div>
+              <button class="vanlife-button" id="vanlifePresetButton">Apply vanlife preset</button>
+            </section>
+
+            <section class="panel timeline-panel">
+              <div class="panel-heading timeline-heading">
+                <div><div class="section-kicker">04 — PUT IT TOGETHER</div><h2>Your story timeline <span id="sceneCount" class="count-pill">0 scenes</span></h2></div>
+                <div class="timeline-actions"><span class="total-duration" id="totalDuration">00:00</span><button class="small-icon-button" id="addSceneButton" title="Add a scene">＋</button><button class="more-button" id="timelineMoreButton" aria-label="More timeline options">···</button></div>
+              </div>
+              <div class="timeline-empty" id="timelineEmpty"><div class="empty-scene-icon">▤</div><strong>Your story starts with a scene</strong><p>Upload narration and find licensed visuals, or build scenes from your script.</p><button class="text-button" id="emptyBuildButton">Build scenes <span>→</span></button></div>
+              <div class="scene-list" id="sceneList"></div>
+              <div class="timeline-footer"><span><span class="green-dot"></span> No repeated sourced clip; providers and contributors vary where possible</span><span>Source audio is muted; review screen direction and 180° continuity</span></div>
+            </section>
+            <footer class="main-footer"><span>Made for stories worth telling.</span><span>Scene Studio <span class="footer-divider">·</span> v1.0</span></footer>
+          </section>
+
+          <aside class="preview-column">
+            <section class="preview-panel">
+              <div class="preview-topline"><span>LIVE PREVIEW</span><button class="preview-menu" id="previewMenu" aria-label="Preview options">···</button></div>
+              <div class="preview-screen" id="previewScreen">
+                <canvas id="previewCanvas" width="1280" height="720"></canvas>
+                <video id="sourceVideo" playsinline muted></video>
+                <div class="preview-placeholder" id="previewPlaceholder"><div class="placeholder-art"><div class="art-sun"></div><div class="art-hill hill-back"></div><div class="art-hill hill-front"></div><div class="art-play">▶</div></div><span>YOUR STORY, IN MOTION</span></div>
+                <div class="preview-overlay"><span id="previewSceneLabel">READY WHEN YOU ARE</span><span id="previewTimecode">00:00</span></div>
+              </div>
+              <div class="playback-controls"><button class="transport-button" id="prevSceneButton" title="Previous scene">|◀</button><button class="play-button" id="playButton" aria-label="Play preview">▶</button><button class="transport-button" id="nextSceneButton" title="Next scene">▶|</button><span class="control-spacer"></span><button class="aspect-button" id="aspectButton">16:9 <span>⌄</span></button><label class="fps-control">FPS <select id="frameRateSelect" aria-label="Export frame rate"><option value="24" selected>24</option><option value="30">30</option><option value="60">60</option></select></label><button class="fullscreen-button" id="fullscreenButton" aria-label="Fullscreen">⛶</button></div>
+              <div class="now-playing" id="nowPlaying"><span class="playing-wave"><i></i><i></i><i></i></span><span id="nowPlayingText">Your video preview will appear here</span></div>
+            </section>
+            <section class="preview-note"><span class="note-icon">✳</span><div><strong>Let the scenes tell it.</strong><p>Each scene pairs a moment from your footage or a licensed photo with your narration. Adjust, rearrange, and make it yours.</p></div></section>
+            <button class="download-project-button" id="downloadProjectButton"><span>↓</span> Download project file <span class="download-subtext">.json</span></button>
+          </aside>
+        </div>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="modal-backdrop" id="modalBackdrop" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-top"><span class="modal-mark">✳</span><button class="modal-close" id="modalClose" aria-label="Close">×</button></div><h2 id="modalTitle">Your video is rendering</h2><p id="modalText">Scene is bringing your clips and story together.</p><div class="render-track"><span id="renderProgress"></span></div><div class="render-caption" id="renderCaption">Preparing your video…</div><a class="render-download" id="renderDownload" hidden download="my-scene.webm">↓ Download your video</a></div></div>
+    <script src="app.js"></script>
+  </body>
+</html>
